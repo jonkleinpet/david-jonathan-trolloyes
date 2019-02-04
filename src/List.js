@@ -9,7 +9,7 @@ function List(props) {
       </header>
 
       <div className="List-cards">
-        {props.cards}
+        {props.cards.map((card, index) => <p key={index}>{card.title}{card.content}</p> )}
       </div>
     </section>
   )

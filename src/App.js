@@ -5,14 +5,14 @@ import Card from './Card';
 import List from './List';
 import STORE from './store'
 
-function App(props) {
-  const { lists, allCards} = props;
+function App({store}) {
+  const { lists, allCards} = store;
   
   console.log(lists)
 
-  const id = lists.cardIds.map((id) => allCards.find(function(element) {
-    return element === id;
-  }));
+  // const id = lists.cardIds.map((id) => allCards.find(function(element) {
+  //   return element === id;
+  // }));
 
   return (
     <main className='App'>
@@ -20,7 +20,12 @@ function App(props) {
         <h1>Trelloyes</h1>
       </header> 
       <div className="App-list">
-  { lists.map((list) => <List header={list.header} cards={id} />) }
+  { lists.map((list, index) => {
+    const cards = list.cardIds.map(function(id){
+      return allCards[id]
+    })
+      return <List key = {index} header={list.header} cards={cards}/>
+  })}
       </div>
     </main>
   );
@@ -29,4 +34,4 @@ function App(props) {
 
 export default App;
 
-ReactDOM.render(<App props={STORE}/>, document.getElementById('root'));
+ReactDOM.render(<App store={STORE}/>, document.getElementById('root'));
